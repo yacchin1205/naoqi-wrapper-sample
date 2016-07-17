@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+
+    // Qi SDK
+    compile 'com.aldebaran:qisdk:0.7'
+}
+
+repositories {
+    jcenter()
+
+    // For Qi SDK
+    maven {
+        url 'http://android.aldebaran.com/sdk/maven'
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:${System.getProperty('user.home')}/.m2/repository")
+            pom.groupId = 'com.github.yacchin1205'
+            pom.version = '0.1.0'
+            pom.artifactId = "naoqi-wrapper-sample"
+        }
+    }
+}
